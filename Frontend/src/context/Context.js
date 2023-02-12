@@ -7,6 +7,7 @@ let data = {
   darkTheme: true,
   user: {},
   isLogin: null,
+  image: "",
   baseUrl:
     window.location.href.split(":")[0] === "http"
       ? `http://localhost:5001`
