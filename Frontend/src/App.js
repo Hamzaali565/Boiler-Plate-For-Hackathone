@@ -7,6 +7,10 @@ import Login from "./app/Screens/Login";
 import Signup from "./app/Screens/Signup";
 import Home from "./app/Screens/Home";
 import { GlobalContext } from "./context/Context";
+import Navbar from "./app/Screens/Admin/Navbar";
+import AllProduct from "./app/Screens/Admin/AllProduct";
+import AddProduct from "./app/Screens/Admin/AddProduct";
+import Account from "./app/Screens/Admin/Account";
 
 function App() {
   let { state, dispatch } = useContext(GlobalContext);
@@ -35,7 +39,7 @@ function App() {
     <Stack>
       {state.isLogin === true ? (
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Account />} />
           <Route path="*" element={<Navigate to="/" replace={true} />} />
         </Routes>
       ) : null}

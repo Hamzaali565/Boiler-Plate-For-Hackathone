@@ -8,7 +8,7 @@ import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 
 const app = express();
-const port = process.env.PORT || 5001;
+const port = process.env.PORT || 5005;
 
 app.use(express.json());
 app.use(cookieParser());
@@ -26,7 +26,7 @@ const SECRET = process.env.SECRET || "topsecret";
 //---userSchema---//
 const userSchema = new mongoose.Schema({
   firstName: { type: String },
-  lastName: { type: String },
+  contact: { type: String },
   email: { type: String, required: true },
   password: { type: String, required: true },
 
@@ -38,7 +38,7 @@ export const userModel = mongoose.model("Users", userSchema);
 app.post("/api/v1/signup", (req, res) => {
   let body = req.body;
 
-  if (!body.firstName || !body.lastName || !body.email || !body.password) {
+  if (!body.firstName || !body.contact || !body.email || !body.password) {
     res.status(400).send({ message: "Required Parameters Are Missing" });
     return;
   }
@@ -256,7 +256,7 @@ app.listen(port, () => {
 ///------mongooseThings------///
 const mongodbURI =
   process.env.mongodbURI ||
-  "mongodb+srv://CRUD:hamzaali565@cluster0.kh990zg.mongodb.net/posting?retryWrites=true&w=majority";
+  "mongodb+srv://CRUD:hamzaali565@cluster0.kh990zg.mongodb.net/Saylani?retryWrites=true&w=majority";
 /////////////////////////////////////////////////////////////////////////////////////////////////
 mongoose.connect(mongodbURI);
 

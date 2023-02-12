@@ -19,10 +19,10 @@ const Cont = styled(Box)({
   height: "100vh",
 });
 const FieldCont = styled(Box)({
-  border: "3px solid gray",
+  border: "3px solid green",
   padding: "30px 70px 30px 70px",
   margin: "10px",
-  height: "380px",
+  // height: "380px",
   // marginBottom: "50px",
   borderRadius: "20px",
 });
@@ -31,28 +31,21 @@ function Signup() {
   let { state, dispatch } = useContext(GlobalContext);
   const [result, setResult] = useState("");
   const [name, setName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [contact, setContact] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfimPassword] = useState("");
   const [opens, setOpens] = useState(false);
   const [mtype, setMtype] = useState("");
   const [messages, setMessages] = useState("");
   let navigate = useNavigate();
   const SignupHandler = async (e) => {
     e.preventDefault();
-    if (confirmPassword !== password) {
-      setOpens(true);
-      setMtype("error");
-      setMessages("Password does not match");
-      return;
-    }
     try {
       let response = await axios.post(
         `${state.baseUrl}/api/v1/signup`,
         {
           firstName: name,
-          lastName: lastName,
+          contact: contact,
           email: email,
           password: password,
         },
@@ -91,19 +84,27 @@ function Signup() {
               justifyContent: "center",
             }}
           >
-            Sign-up
+            SAYLANI WELFARE
           </Typography>
-
-          <form onSubmit={SignupHandler}>
+          <Typography
+            variant="h5"
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            ONLINE DISCOUNT STORE
+          </Typography>
+          <form onSubmit={SignupHandler} style={{ paddingLeft: "40px" }}>
             <TextField
               sx={{ mt: "10px" }}
               className="TextField"
               id="name"
-              label="First Name"
+              label="Full Name"
               variant="outlined"
               type="name"
               name="username"
-              autoComplete="First Name"
+              autoComplete="Full Name"
               onChange={(e) => {
                 setName(e.target.value);
               }}
@@ -112,14 +113,14 @@ function Signup() {
             <TextField
               sx={{ mt: "10px" }}
               className="TextField"
-              id="name1"
-              label="Last Name"
+              id="Contact"
+              label="Contact"
               variant="outlined"
-              type="name"
-              name="username"
-              autoComplete="Last name"
+              type="number"
+              name="contact"
+              autoComplete="contact"
               onChange={(e) => {
-                setLastName(e.target.value);
+                setContact(e.target.value);
               }}
             />
             <br />
@@ -154,21 +155,7 @@ function Signup() {
               }}
             />
             <br />
-            <TextField
-              sx={{ mt: "10px" }}
-              className="TextField"
-              id="password1"
-              label="Password"
-              variant="outlined"
-              type="password"
-              name="current-password"
-              autoComplete="new-password"
-              placeholder="password"
-              onChange={(e) => {
-                setConfimPassword(e.target.value);
-              }}
-            />
-            <br />
+
             <Box sx={{ mt: "10px", display: "flex", justifyContent: "center" }}>
               <Button variant="outlined" type="submit">
                 Signup
@@ -176,7 +163,7 @@ function Signup() {
             </Box>
             <Box sx={{ mt: "10px" }}>
               <Typography variant="p">
-                Already have an account?<Link to={`/`}>Signin</Link>{" "}
+                Already have an account?<Link to={`/`}>Login</Link>{" "}
               </Typography>
             </Box>
           </form>

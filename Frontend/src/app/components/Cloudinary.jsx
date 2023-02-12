@@ -1,7 +1,8 @@
+import { IconButton } from "@mui/material";
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import { GlobalContext } from "../../context/Context";
-
+import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 const Cloudinary = () => {
   const [pic, setPic] = useState(null);
   let { state, dispatch } = useContext(GlobalContext);
@@ -34,7 +35,7 @@ const Cloudinary = () => {
   };
   return (
     <>
-      <div>Hello World</div>
+      {/* <div>Hello World</div>
       <form onSubmit={send}>
         <input
           id="inputTag"
@@ -45,7 +46,19 @@ const Cloudinary = () => {
           }}
         />
         <button type="submit">Post</button>
-      </form>
+      </form> */}
+      <IconButton color="primary" aria-label="upload picture" component="label">
+        <input
+          hidden
+          accept="image/*"
+          type="file"
+          required
+          onChange={(e) => {
+            setPic(e.currentTarget.files[0]);
+          }}
+        />
+        <PhotoCameraIcon sx={{ fontSize: "80px", color: "gray" }} />
+      </IconButton>
     </>
   );
 };
