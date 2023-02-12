@@ -35,15 +35,16 @@ const Cloudinary = () => {
   return (
     <>
       <div>Hello World</div>
-      <form>
+      <form onSubmit={send}>
         <input
           id="inputTag"
           type="file"
+          required
           onChange={(e) => {
             setPic(e.currentTarget.files[0]);
           }}
         />
-        <button onClick={send}>Post</button>
+        <button type="submit">Post</button>
       </form>
     </>
   );
