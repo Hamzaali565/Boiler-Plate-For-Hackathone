@@ -1,7 +1,7 @@
 import { Avatar, Button, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import axios from "axios";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { GlobalContext } from "../../../context/Context";
 import Cloudinary from "../../components/Cloudinary";
 import BottomBar from "./Bottombar";
@@ -9,8 +9,28 @@ import Navbar from "./Navbar";
 
 const Account = () => {
   let { state, dispatch } = useContext(GlobalContext);
+  const [id, setID] = useState("");
+  const [name, setName] = useState("");
+
+  const updation = () => {
+    axios
+      .put(
+        `${state.baseUrl}/api/v1/name/${id}`,
+        { name: name },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        console.log("allDAta", response.data.data);
+        alert("user Updated Successfully refresh to check changes");
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+    setID("");
+  };
 
   const homeOut = async () => {
+    console.log(id);
     try {
       let response = await axios.post(
         `${state.baseUrl}/api/v1/logout`,
@@ -25,6 +45,7 @@ const Account = () => {
       console.log("e: ", e);
     }
   };
+
   return (
     <Box sx={{ marginBottom: "50px" }}>
       <Box sx={{ paddingX: "30px" }}>
@@ -66,16 +87,31 @@ const Account = () => {
 
         {/* Update Name */}
         <Box
-          sx={{ display: "flex", justifyContent: "center", marginTop: "20px" }}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "20px",
+            alignItems: "center",
+          }}
         >
-          <TextField
-            id="standard-multiline-flexible"
-            label="Update Full Name"
-            multiline
-            sx={{ minWidth: "200px" }}
-            maxRows={4}
-            variant="standard"
-          />
+          <form>
+            <TextField
+              id="standard-multiline-flexible"
+              label="Update Full Name"
+              multiline
+              sx={{ minWidth: "200px" }}
+              maxRows={4}
+              variant="standard"
+              // onFocus={() => setID(state.user._id)}
+              onChange={(e) => {
+                setName(e.target.value);
+                setID(state.user._id);
+              }}
+            />
+          </form>
+          <Button sx={{ bgcolor: "green", color: "white" }} onClick={updation}>
+            Update Name
+          </Button>
         </Box>
 
         {/* imageUpload */}

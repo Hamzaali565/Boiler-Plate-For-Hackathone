@@ -294,6 +294,39 @@ app.get("/api/v1/products", (req, res) => {
   });
 });
 
+//---UPDATE_USER---//
+app.put("/api/v1/name/:id", async (req, res) => {
+  const body = req.body;
+  const id = req.params.id;
+
+  if (!body.name) {
+    res.status(400).send({
+      message: "Required Parameters Are Missings",
+    });
+    return;
+  }
+  try {
+    let data = await userModel
+      .findByIdAndUpdate(
+        id,
+        {
+          firstName: body.name,
+        },
+        { new: true }
+      )
+      .exec();
+    console.log("updated: ", data);
+    res.send({
+      message: "Name modified successfully",
+      data: data,
+    });
+  } catch (error) {
+    console.log("error: ", error);
+    res.status(500).send({
+      message: "server error",
+    });
+  }
+});
 ///---Redirect-To-Home-If-Token---///
 const getUser = async (req, res) => {
   let _id = "";

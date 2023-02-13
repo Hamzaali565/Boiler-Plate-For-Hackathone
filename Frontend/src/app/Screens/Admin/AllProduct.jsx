@@ -49,7 +49,7 @@ const AllProduct = () => {
       </Typography>
       <Box sx={{ marginBottom: "100px" }}>
         {ray1.map((eachitem, i) => (
-          <Box sx={{ paddingX: "10px" }}>
+          <Box sx={{ paddingX: "10px" }} key={eachitem._id}>
             <Box
               sx={{
                 border: "1px solid green",

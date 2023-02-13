@@ -39,7 +39,7 @@ function App() {
 
   return (
     <Stack>
-      {state.isLogin === true && state.type === true ? (
+      {state.isLogin === true ? (
         <Routes>
           <Route path="/all-products" element={<AllProduct />} />
           <Route path="/account" element={<Account />} />
@@ -51,12 +51,12 @@ function App() {
           />
         </Routes>
       ) : null}
-      {state.isLogin === true && state.type === false ? (
+      {/* {state.isLogin === true && state.type === false ? (
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="*" element={<Navigate to="/home" replace={true} />} />
         </Routes>
-      ) : null}
+      ) : null} */}
 
       {state.isLogin === false ? (
         <Routes>

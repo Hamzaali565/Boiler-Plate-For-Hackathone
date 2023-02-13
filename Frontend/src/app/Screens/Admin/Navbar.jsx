@@ -1,10 +1,12 @@
 import { AppBar, Avatar, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useContext } from "react";
 import ReorderIcon from "@mui/icons-material/Reorder";
 import { useNavigate } from "react-router-dom";
+import { GlobalContext } from "../../../context/Context";
 
 const Navbar = () => {
+  let { state, dispatch } = useContext(GlobalContext);
   let navigate = useNavigate();
 
   const replace = () => {
@@ -31,7 +33,7 @@ const Navbar = () => {
           <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
           <Box sx={{ marginLeft: "10px", paddingTop: "7px" }}>
             <Typography variant="h6" sx={{ color: "blue", lineHeight: "10px" }}>
-              Mr.Admin
+              {state.user.firstName}
             </Typography>
             <Typography variant="h6" sx={{ color: "green", fontSize: "15px" }}>
               Admin
