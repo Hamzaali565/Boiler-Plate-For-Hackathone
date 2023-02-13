@@ -5,7 +5,6 @@ import { Routes, Route, Link, Navigate } from "react-router-dom";
 import { Box, createTheme, Stack } from "@mui/material";
 import Login from "./app/Screens/Login";
 import Signup from "./app/Screens/Signup";
-import Home from "./app/Screens/Home";
 import { GlobalContext } from "./context/Context";
 import Navbar from "./app/Screens/Admin/Navbar";
 import AllProduct from "./app/Screens/Admin/AllProduct";
@@ -13,6 +12,7 @@ import AddProduct from "./app/Screens/Admin/AddProduct";
 import Account from "./app/Screens/Admin/Account";
 import Orders from "./app/Screens/Admin/Orders";
 import BottomBar from "./app/Screens/Admin/Bottombar";
+import Home from "./app/Screens/Home";
 
 function App() {
   let { state, dispatch } = useContext(GlobalContext);
