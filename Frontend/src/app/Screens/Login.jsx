@@ -36,6 +36,7 @@ function Login() {
   const [opens, setOpens] = useState(false);
   const [mtype, setMtype] = useState("");
   const [messages, setMessages] = useState("");
+
   const loginHandler = async (e) => {
     e.preventDefault();
 
@@ -54,14 +55,18 @@ function Login() {
         type: "USER_LOGIN",
         payload: response.data.profile,
       });
+      dispatch({
+        type: "SUPER_ADMIN",
+        payload: response.data.profile.admin,
+      });
 
-      console.log("login successful");
+      console.log("login successful", response.data.profile.admin);
       setResult("login successful");
     } catch (e) {
       console.log("e: ", e);
       setOpens(true);
       setMtype("error");
-      setMessages(e.response.data.message);
+      setMessages(e.response.data.message || "Network Error");
     }
 
     // e.reset();

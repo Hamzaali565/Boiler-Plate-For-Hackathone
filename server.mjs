@@ -29,10 +29,25 @@ const userSchema = new mongoose.Schema({
   contact: { type: String },
   email: { type: String, required: true },
   password: { type: String, required: true },
+  admin: { type: Boolean, default: false },
 
   createdOn: { type: Date, default: Date.now },
 });
 export const userModel = mongoose.model("Users", userSchema);
+
+// ----Product-schema===//
+let productSchema = new mongoose.Schema({
+  // url: { type: String },
+  name: { type: String, required: true },
+  category: { type: String, required: true },
+  description: String,
+  unitName: { type: String, required: true },
+  price: { type: Number, required: true },
+  createdOn: { type: Date, default: Date.now },
+  // owner: {type: mongoose.ObjectId, required: true},
+  // isDeleted: {type: Boolean, default: false},
+});
+export const productModel = mongoose.model("products", productSchema);
 
 //-----signup-----//
 app.post("/api/v1/signup", (req, res) => {
@@ -104,7 +119,7 @@ app.post("/api/v1/login", (req, res) => {
   // check if user exist
   userModel.findOne(
     { email: body.email },
-    "firstName lastName email password",
+    "firstName lastName email password admin",
     (err, data) => {
       if (!err) {
         console.log("data: ", data);
@@ -140,13 +155,14 @@ app.post("/api/v1/login", (req, res) => {
                   email: data.email,
                   firstName: data.firstName,
                   lastName: data.lastName,
+                  admin: data.admin,
                   age: data.age,
                   _id: data._id,
                 },
               });
               return;
             } else {
-              console.log("password did not match");
+              console.log(err);
               res.status(401).send({ message: "Incorrect email or password" });
               return;
             }
@@ -213,6 +229,71 @@ app.use("/api/v1", (req, res, next) => {
     }
   });
 });
+
+// ---AddProduct---//
+app.post("/api/v1/product", (req, res) => {
+  const body = req.body;
+
+  if (
+    // validation
+    // !body.url &&
+    !body.name &&
+    !body.category &&
+    !body.description &&
+    !body.unitName &&
+    !body.price
+  ) {
+    res.status(400).send({
+      message: "required parameters missing",
+    });
+    return;
+  }
+  productModel.create(
+    {
+      name: body.name,
+      price: body.price,
+      description: body.description,
+      url: body.url,
+      owner: new mongoose.Types.ObjectId(body.token._id),
+      unitName: body.unitName,
+      category: body.category,
+    },
+    (err, saved) => {
+      if (!err) {
+        console.log(err);
+
+        res.send({
+          message: "product added successfully",
+          // data: data,
+        });
+      } else {
+        console.log(err);
+        res.status(500).send({
+          message: "server error",
+        });
+      }
+    }
+  );
+});
+
+//---getAllData---//
+app.get("/api/v1/products", (req, res) => {
+  // const userId = new mongoose.Types.ObjectId(req.body.token._id);
+  productModel.find({}, (err, data) => {
+    if (!err) {
+      res.send({
+        message: "got all products successfully",
+        data: data,
+      });
+    } else {
+      console.log(err);
+      res.status(500).send({
+        message: "server error",
+      });
+    }
+  });
+});
+
 ///---Redirect-To-Home-If-Token---///
 const getUser = async (req, res) => {
   let _id = "";

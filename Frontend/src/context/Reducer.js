@@ -9,6 +9,9 @@ export const reducer = (state, action) => {
     case "IMAGE_URL": {
       return { ...state, image: action.payload };
     }
+    case "SUPER_ADMIN": {
+      return { ...state, type: action.payload };
+    }
 
     case "TOGGLE_THEME": {
       return { ...state, darkTheme: !state.darkTheme }; // set this to null on purpose, do not change

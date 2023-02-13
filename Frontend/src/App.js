@@ -11,6 +11,8 @@ import Navbar from "./app/Screens/Admin/Navbar";
 import AllProduct from "./app/Screens/Admin/AllProduct";
 import AddProduct from "./app/Screens/Admin/AddProduct";
 import Account from "./app/Screens/Admin/Account";
+import Orders from "./app/Screens/Admin/Orders";
+import BottomBar from "./app/Screens/Admin/Bottombar";
 
 function App() {
   let { state, dispatch } = useContext(GlobalContext);
@@ -37,12 +39,25 @@ function App() {
 
   return (
     <Stack>
-      {state.isLogin === true ? (
+      {state.isLogin === true && state.type === true ? (
         <Routes>
-          <Route path="/" element={<Account />} />
-          <Route path="*" element={<Navigate to="/" replace={true} />} />
+          <Route path="/all-products" element={<AllProduct />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/add-product" element={<AddProduct />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route
+            path="*"
+            element={<Navigate to="/all-products" replace={true} />}
+          />
         </Routes>
       ) : null}
+      {state.isLogin === true && state.type === false ? (
+        <Routes>
+          <Route path="/home" element={<Home />} />
+          <Route path="*" element={<Navigate to="/home" replace={true} />} />
+        </Routes>
+      ) : null}
+
       {state.isLogin === false ? (
         <Routes>
           <Route path="/login" element={<Login />} />
